@@ -5,10 +5,11 @@
   <head>
     <meta charset="UTF-8">
     <title>Swagger UI</title>
-     <link rel="stylesheet" type="text/css" href="{% static 'swagger/swagger-ui.css' %}" />
+   <link rel="stylesheet" type="text/css" href="{% static 'swagger/swagger-ui.css' %}" />
     <link rel="icon" type="image/png" href="{% static 'swagger/favicon-32x32.png' %}" />
     <link rel="icon" type="image/png" href="{% static 'swagger/favicon-16x16.png' %}6" />
-
+    <script src="{% static 'swagger/swagger-ui-bundle.js' %}" charset="UTF-8"> </script>
+    <script src="{% static 'swagger/swagger-ui-standalone-preset.js' %}" charset="UTF-8"> </script>
     <style>
       html
       {
@@ -34,8 +35,7 @@
 
   <body>
     <div id="swagger-ui"></div>
-    <script src="{% static 'swagger/swagger-ui-bundle.js' %}" charset="UTF-8"> </script>
-    <script src="{% static 'swagger/swagger-ui-standalone-preset.js' %}" charset="UTF-8"> </script>
+
 
     <script>
     window.onload = function() {
