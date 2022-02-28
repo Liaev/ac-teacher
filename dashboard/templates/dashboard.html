@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" class="mdc-typography">
+<head>
+  <title>Login</title>
+  {% include "include_head.html" %}
+</head>
+<body>
+  <header class="mdc-toolbar">
+    <div class="mdc-toolbar__row">
+      <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+        <span class="mdc-toolbar__title">Dashboard</span>
+      </section>
+    </div>
+  </header>
+  <div class="content">
+    <h1>Courses</h1>
+    {% for course in courses %}
+        <li><a href="{% url 'course_dashboard' course.id  %}?t={{teacher_id}}"> {{ course.name }}</a></li>
+    {% endfor %}
+  </div>
+</body>
+</html>

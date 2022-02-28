@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" class="mdc-typography">
+<head>
+  <title>Login</title>
+  {% include "include_head.html" %}
+</head>
+<body>
+  <header class="mdc-toolbar">
+    <div class="mdc-toolbar__row">
+      <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+        <span class="mdc-toolbar__title">Dashboard</span>
+      </section>
+    </div>
+  </header>
+  <div class="content">
+
+    <h1>Grade</h1>
+    <label>Project: </label>
+    <div>{{grade.project.name}}</div>
+    <br />
+    <label>Student: </label>
+    <div>{{grade.student.name}}</div>
+
+<form method="post" action="{% url 'grade_dashboard' course_id project_id grade.id %}?t={{teacher_id}}" class="form">
+      {% csrf_token %}
+      <div class="mdc-card">
+        {% if form.errors %}
+        <section>
+          {% for error, error_value in form.errors.items %}
+            {{ error_value }}
+          {% endfor %}
+        </section>
+        {% endif %}
+        <section class="mdc-card__supporting-text">
+          <div class="mdc-textfield mdc-textfield--upgraded">
+            <label class="mdc-textfield__label" for="{{ form.score.auto_id }}">Score</label>
+            <div>{{ form.score }}</div>
+          </div>
+        </section>
+
+        <section class="mdc-card__actions">
+          <button
+            type="submit"
+            value="score"
+            class="mdc-button mdc-button--primary mdc-button--raised"
+          >Update score</button>
+        </section>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

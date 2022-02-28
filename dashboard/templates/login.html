@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" class="mdc-typography">
+<head>
+  <title>Login</title>
+  {% include "include_head.html" %}
+</head>
+<body>
+  <p id="redirect-content" style="display:none">
+    <label for="redirect-content">Redirect:</label>
+    {{ next }}
+  </p>
+  <header class="mdc-toolbar">
+    <div class="mdc-toolbar__row">
+      <section class="mdc-toolbar__section mdc-toolbar__section--align-start">
+        <span class="mdc-toolbar__title">Login</span>
+      </section>
+    </div>
+  </header>
+  <div class="content">
+    <form method="post" action="{% url 'login' %}" class="form">
+      {% csrf_token %}
+      <div class="mdc-card">
+        <section class="mdc-card__primary">
+          <h1 class="mdc-card__title mdc-card__title--large">Login</h1>
+          <h2 class="mdc-card__subtitle">Login to Ac Teachers</h2>
+        </section>
+        {% if form.errors %}
+        <section>
+          {% for error, error_value in form.errors.items %}
+            {{ error_value }}
+          {% endfor %}
+        </section>
+        {% endif %}
+        <section class="mdc-card__supporting-text">
+          <div class="mdc-textfield mdc-textfield--upgraded">
+            <label class="mdc-textfield__label" for="{{ form.username.auto_id }}">Username</label>
+            <div>{{ form.username }}</div>
+          </div>
+          <div class="mdc-textfield mdc-textfield--upgraded">
+            <label class="mdc-textfield__label" for="{{ form.password.auto_id }}">Password</label>
+            <div>{{ form.password }}</div>
+          </div>
+        </section>
+
+        <section class="mdc-card__actions">
+          <button
+            type="submit"
+            value="login"
+            class="mdc-button mdc-button--primary mdc-button--raised mdc-card__action"
+            data-mdc-auto-init="MDCRipple"
+          >Login</button>
+        </section>
+      </div>
+      <input
+        type="hidden"
+        name="next"
+        value="{{ next }}"
+      />
+    </form>
+  </div>
+</body>
+</html>

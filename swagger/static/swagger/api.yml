@@ -1,0 +1,251 @@
+openapi: 3.0.3
+
+servers:
+- url: https://ac-teachers.herokuapp.com/api
+  description: Development server
+
+
+info:
+  title: Ac Teachers - API
+  version: '0.1'
+  description: >
+    This is a demo api.
+
+    
+security:
+  - BearerAuth: []
+
+paths:
+  '/v1/oauth/token/':
+    post:
+      summary: Login
+      description: Login with a teacher account and receive an access token that is valid for 24 hours.
+      parameters:
+        - name: username
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
+      tags:
+        - V1
+      responses:
+        '200':
+          $ref: '#/components/responses/LoginResponse'
+        '400':
+          $ref: '#/components/responses/ForbiddenResponse'
+
+  '/v1/courses':
+    get:
+      summary: Get the courses
+      description: This will retrieve the courses for the logged in teacher.
+      tags:
+        - V1
+      responses:
+        '200':
+          $ref: '#/components/responses/CourseResponse'
+        '400':
+          $ref: '#/components/responses/ForbiddenResponse'
+
+  '/v1/projects/{course_id}/':
+    get:
+      summary: Get the projects
+      description: This will retrieve the projects from the logged in user
+      tags:
+        - V1
+      parameters:
+      - name: course_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/ProjectResponse'
+        '400':
+          $ref: '#/components/responses/ForbiddenResponse'
+
+  '/v1/projects/{project_id}':
+    get:
+      summary: Get a project
+      description: Retrieve information about a project
+      tags:
+        - V1
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          $ref: '#/components/responses/ProjectGrades'
+        '400':
+          $ref: '#/components/responses/ForbiddenResponse'
+    post:
+      summary: Update the score of a students project
+      description: Update the score of a sutdents project
+      tags:
+        - V1
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: student_id
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: score
+        in: query
+        required: true
+        schema:
+          type: number
+      responses:
+        '200':
+          $ref: '#/components/responses/EmptyResponse'
+        '400':
+          $ref: '#/components/responses/ForbiddenResponse'
+
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+  responses:
+    LoginResponse:
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LoginDetail'
+    CourseResponse:
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CourseList'
+
+    ProjectResponse:
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectList'
+    ProjectGrades:
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectGradeList'
+    EmptyResponse:
+      description: ''
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Empty'
+
+    ForbiddenResponse:
+      description: 'Your account does not have access to this endpoint.'
+      content:
+        'application/json': {}
+
+
+  schemas:
+    LoginDetail:
+      type: object
+      properties:
+        token:
+          type: string
+          format: uuid
+          example: '241700c0-ab77-44a8-bef2-b12fcd6486e4'
+      readOnly: True
+
+    CourseList:
+      type: object
+      properties:
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/CourseDetails'
+
+
+    CourseDetails:
+      readOnly: True
+      allOf:
+        - $ref: '#/components/schemas/Course'
+
+    Course:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '1ce5fe96-b620-48a3-9092-ab6e6be8278f'
+        name:
+          type: string
+          example: 'Programming'
+        teacher_id:
+          type: string
+          example: '1ce5fe96-b620-48a3-9092-ab6e6be8123f'
+
+    ProjectList:
+      type: object
+      properties:
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectDetail'
+
+    ProjectDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '1ce5fe96-b620-48a3-9092-ab6e6be8278f'
+        name:
+          type: string
+          example: Jack
+        description:
+          type: string
+          example: 'Python lessons'
+        course_id:
+          type: string
+          example: '1ce5fe96-b620-48a3-9092-ab6e6be8278f'
+
+    ProjectGradeList:
+      type: object
+      properties:
+        project_id:
+          type: string
+          example: '1ce5fe96-b620-48a3-9092-ab6e6be8278f'
+        project_name:
+          type: string
+          example: "Python Basics"
+        students_grades:
+          type: array
+          items:
+            $ref: '#/components/schemas/StudentDetail'
+
+    StudentDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '1ce5fe96-b620-48a3-9092-ab6e6be8278f'
+        name:
+          type: string
+          example: 'Bob'
+        score:
+          type: number
+          example: 4.20
+
+    Empty:
+      type: object
