@@ -1,8 +1,10 @@
 import dj_database_url
 
 from .base import *
-
-from .local import *
+try:
+    from .local import *
+except ImportError:
+    pass
 
 
 # Database
