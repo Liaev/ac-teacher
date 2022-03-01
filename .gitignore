@@ -1,6 +1,7 @@
 local.py
 .shell.py
-
+.idea
+.DS_Store
 # Django #
 *.log
 *.pot
