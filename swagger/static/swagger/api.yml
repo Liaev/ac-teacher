@@ -51,7 +51,7 @@ paths:
         '400':
           $ref: '#/components/responses/ForbiddenResponse'
 
-  '/v1/projects/{course_id}/':
+  '/v1/courses/{course_id}/':
     get:
       summary: Get the projects
       description: This will retrieve the projects from the logged in user
@@ -212,10 +212,10 @@ components:
           example: '1ce5fe96-b620-48a3-9092-ab6e6be8278f'
         name:
           type: string
-          example: Jack
+          example: 'Python programming"
         description:
           type: string
-          example: 'Python lessons'
+          example: 'Python for beginners'
         course_id:
           type: string
           example: '1ce5fe96-b620-48a3-9092-ab6e6be8278f'
