@@ -212,7 +212,7 @@ components:
           example: '1ce5fe96-b620-48a3-9092-ab6e6be8278f'
         name:
           type: string
-          example: 'Python programming"
+          example: 'Python programming'
         description:
           type: string
           example: 'Python for beginners'
