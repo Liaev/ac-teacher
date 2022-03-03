@@ -20,17 +20,19 @@ paths:
     post:
       summary: Login
       description: Login with a teacher account and receive an access token that is valid for 24 hours.
-      parameters:
-        - name: username
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: password
-          in: query
-          required: true
-          schema:
-            type: string
+      requestBody:
+        description: Login as a teacher
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+
       tags:
         - V1
       responses:
@@ -92,21 +94,23 @@ paths:
       tags:
         - V1
       parameters:
-      - name: project_id
-        in: path
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Login
         required: true
-        schema:
-          type: string
-      - name: student_id
-        in: query
-        required: true
-        schema:
-          type: string
-      - name: score
-        in: query
-        required: true
-        schema:
-          type: number
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                student_id:
+                  type: string
+                score:
+                  type: number
       responses:
         '200':
           $ref: '#/components/responses/EmptyResponse'
