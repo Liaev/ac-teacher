@@ -41,7 +41,7 @@ paths:
         '400':
           $ref: '#/components/responses/ForbiddenResponse'
 
-  '/v1/courses':
+  '/v1/courses/':
     get:
       summary: Get the courses
       description: This will retrieve the courses for the logged in teacher.
@@ -71,7 +71,7 @@ paths:
         '400':
           $ref: '#/components/responses/ForbiddenResponse'
 
-  '/v1/projects/{project_id}':
+  '/v1/projects/{project_id}/':
     get:
       summary: Get a project
       description: Retrieve information about a project
